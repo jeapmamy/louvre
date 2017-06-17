@@ -1,0 +1,4 @@
+services:
+#    jv_core.example:
+#        class: JV\CoreBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
