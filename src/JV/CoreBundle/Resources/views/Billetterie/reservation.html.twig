@@ -1,0 +1,115 @@
+{# src/JV/CoreBundle/Resources/views/Billetterie/reservation.html.twig #}
+
+{% extends "JVCoreBundle::layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Réservation
+{% endblock %}
+
+{% block style %}
+<style>
+	
+	
+</style>
+
+{% endblock %}
+
+{% block jvcore_body %}
+
+<h3>Réservation</h3>
+<br />
+<div id="dialogDate" title="Date :">
+	<p>Veuillez sélectionner votre date de réservation à l'aide du calendrier.</p>
+	<p>Le musée est fermé les mardis ainsi que les 1er mai, 1er novembre et 25 décembre.</p>
+	<p>Attention : Pour les visites le dimanche, les billets sont a retirer sur place (il n'est pas possible de les réserver en ligne).</p>
+</div>
+<div id="dialogJournee" title="Journée ou Demi-journée ?">
+	<p>Le billet "demi-journée" est valable à partir de 14h00.</p>
+	<p>Son tarif est la moitié du prix d'un billet "journée".</p>
+</div>
+<div id="dialogTarif" title="Informations Tarifs : ">
+	<ul>
+		<li>Tarif normal : à partir de 12 ans</li>
+		<li>Tarif enfant : à partir de 4 ans et jusqu'à 12 ans (gratuit pour les enfants de moins de 4 ans)</li>
+		<li>Tarif senior : à partir de 60 ans</li>
+		<li>Tarif réduit : étudiant, militaires, employé d'un service du Ministère de la culture. Vous devrez présenter votre carte étudiant, militaire ou équivalent lors de votre entrée au musée.</li>
+	</ul>
+</div>
+
+<form class="form-inline">
+	<div class="container col-md-12">
+		<div class="row">
+			<div class="col-md-10">
+				Date: <input type="text" id="datepicker" class="form-control" readonly required>
+				<i class="glyphicon glyphicon-info-sign" id="infoDate"></i>
+				<span id="messageDate"></span>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-2">
+				Journée <input type="radio" name="journee" id="journee" checked /> 
+			</div>
+			<div class="col-md-2">
+				1/2 Journée <input type="radio" name="journee" id="demiJournee" />
+			</div>
+			<i class="glyphicon glyphicon-info-sign" id="infoJournee"></i>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-2 blocTarif">
+				<div class="tarif">Tarif Normal
+					<br /><span id="tn"> 16 </span> €</div>
+				<br />
+				<input type="number" id="tarifNormal" name="value" value="0" min="0" class="form-control"><br />
+				<br />
+			</div>
+			<div class="col-md-2 blocTarif">
+				<div class="tarif">Tarif Enfant
+						<br /><span id="te"> 8 </span> €</div>
+					<br />
+				<input type="number" id="tarifEnfant" name="value" value="0" min="0" class="form-control"><br />
+				<br />
+			</div>
+			<div class="col-md-2 blocTarif">
+				<div class="tarif">Tarif Senior
+						<br /><span id="ts"> 12 </span> €</div>
+					<br />
+				<input type="number" id="tarifSenior" name="value" value="0" min="0" class="form-control"><br />
+				<br />
+			</div>
+			<div class="col-md-2 blocTarif">
+				<div class="tarif">Tarif Réduit
+						<br /><span id="tr"> 10 </span> €</div>
+					<br />
+				<input type="number" id="tarifReduit" name="value" value="0" min="0" class="form-control"><br />
+				<br />
+			</div>
+			<i class="glyphicon glyphicon-info-sign" id="infoTarif"></i>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-8" id="ligneRecap">
+				Nombre de place(s) réservée(s) : <span id="nbTickets"> 0 </span>
+					,pour un montant de : <span id="montant"> 0 </span> €.
+			</div>
+		</div>
+		<br />
+	</div>
+	<p>
+		<a href="{{ path('jv_core_coordonnees') }}" class="btn btn-info pull-right">
+			 Coordonnées 2/4 <i class="glyphicon glyphicon-chevron-right"></i>
+		</a>
+	</p>
+</form>
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+	
+</script>
+{% endblock %}
+

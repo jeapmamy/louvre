@@ -1,0 +1,25 @@
+{# src/JV/CoreBundle/Resources/views/Billetterie/recapitulatif.html.twig #}
+
+{% extends "JVCoreBundle::layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Récapitulatif
+{% endblock %}
+
+{% block jvcore_body %}
+
+<h3>Récapitulatif</h3>
+
+<p>
+Ici le récapitulatif de la commande avec abandon possible
+</p>
+<br />
+<p>
+	<a href="{{ path('jv_core_paiement') }}" class="btn btn-info pull-right">
+		 Paiement 4/5 <i class="glyphicon glyphicon-chevron-right"></i>
+	</a>
+</p>
+  	
+  	
+
+{% endblock %}

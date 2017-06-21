@@ -1,0 +1,85 @@
+{# src/JV/CoreBundle/Resources/views/Billetterie/coordonnees.html.twig #}
+
+{% extends "JVCoreBundle::layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }} - Coordonnées
+{% endblock %}
+
+{% block style %}
+<style>
+	
+
+</style>
+
+{% endblock %}
+
+{% block jvcore_body %}
+
+  	<h3>Coordonnées</h3>
+
+<br />
+
+<form class="form-inline">
+	<div class="container col-md-12">
+		<div class="row">
+			<div class="col-md-3">
+				Email: 
+			</div>
+			<div class="col-md-6 form-group">			
+				<input type="email" id="email" class="form-control" />
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3">
+				Nom : 
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="nom" id="nom" class="form-control" />
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-md-3">
+				Prénom : 
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="prenom" id="prenom" class="form-control" /> 
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-md-3">
+				Pays : 
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="pays" id="pays" class="form-control" /> 
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-md-3">
+				Date de naissance : 
+			</div>
+			<div class="col-md-6">
+				<input type="text" name="naissance" id="naissance" class="form-control"/> 
+			</div>
+		</div>
+		<br />
+	</div>
+	<p>
+		<a href="{{ path('jv_core_paiement') }}" class="btn btn-info pull-right">
+			 Paiement 3/4 <i class="glyphicon glyphicon-chevron-right"></i>
+		</a>
+	</p>
+</form>
+
+{% endblock %}
+
+{% block script %}
+<script>
+	
+	
+</script>
+{% endblock %}
