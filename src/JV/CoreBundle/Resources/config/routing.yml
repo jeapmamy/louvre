@@ -15,10 +15,10 @@ jv_core_coordonnees:
     defaults: 
         _controller: JVCoreBundle:Billetterie:coordonnees
 
-jv_core_recapitulatif:
-    path:      /recapitulatif
-    defaults: 
-        _controller: JVCoreBundle:Billetterie:recapitulatif
+# jv_core_recapitulatif:
+#     path:      /recapitulatif
+#     defaults: 
+#         _controller: JVCoreBundle:Billetterie:recapitulatif
 
 jv_core_paiement:
     path:      /paiement
