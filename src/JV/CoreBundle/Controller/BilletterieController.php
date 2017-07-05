@@ -5,7 +5,9 @@
 namespace JV\CoreBundle\Controller;
 
 use JV\CoreBundle\Entity\Billetterie;
+use JV\CoreBundle\Entity\Visiteur;
 use JV\CoreBundle\Form\BilletterieType;
+use JV\CoreBundle\Form\VisiteurType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,14 +30,15 @@ class BilletterieController extends Controller
 		$form = $this->createForm(BilletterieType::class, $billetterie);
 			
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-			/*
-				$session = $request->getSession();
-				$dateReservation = $session->get('dateReservation');
-				$session->set('session_date', $billetterie->getDateReservation());
-			*/
 			
-				// Puis on redirige vers la page suivante
-				return $this->redirectToRoute('jv_core_coordonnees');
+			// On enregistre notre objet $billetterie dans la base de données
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($billetterie);
+			$em->flush();
+
+
+			// Puis on redirige vers la page suivante
+			return $this->redirectToRoute('jv_core_coordonnees', array('id'=>$billetterie->getId()));
 			
 		}
 					
@@ -50,19 +53,41 @@ class BilletterieController extends Controller
 	}
 	
  
- 	public function coordonneesAction(Request $request)
+ 	public function coordonneesAction($id, Request $request)
 	{
-    // Ici, on récupérera les données précédentes
+		$billetterie = $this->getDoctrine()
+  			->getManager()
+  			->getRepository('JVCoreBundle:Billetterie')
+  			->find($id)
+		;
+		
+		if (null === $billetterie) {
+			throw new NotFoundHttpException("La réservation d'id ".$id." n'existe pas.");
+		}
 
-    // Même mécanisme que pour réservation
-    if ($request->isMethod('POST')) {
-		  $request->getSession()->getFlashBag()->add('notice', 'Etape 2 bien validée.');
+		$form = $this->createForm(BilletterieType::class, $billetterie);
+		
+		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+			
+			// On enregistre notre objet $visiteur dans la base de données
+			$em = $this->getDoctrine()->getManager();
+			//$visiteur->setBilletterie($billetterie);
+			$em->persist($billetterie);
+			$em->flush();
 
-		  return $this->redirectToRoute('jv_core_paiement');
-    }
 
-    return $this->render('JVCoreBundle:Billetterie:coordonnees.html.twig');
-  	}
+			// Puis on redirige vers la page suivante
+			return $this->redirectToRoute('jv_core_paiement', array('id'=>$billetterie->getId()));
+			
+		}
+			
+		
+		return $this->render('JVCoreBundle:Billetterie:coordonnees.html.twig', array(
+			'billetterie' => $billetterie,
+			'form' => $form->createView(),
+		));
+
+	}
 	
 /*
     public function recapitulatifAction()
@@ -70,9 +95,38 @@ class BilletterieController extends Controller
 		return $this->render('JVCoreBundle:Billetterie:recapitulatif.html.twig');
 	}
 */
-  	public function paiementAction()
+  	public function paiementAction($id, Request $request)
 	{
-		return $this->render('JVCoreBundle:Billetterie:paiement.html.twig');
+		$billetterie = $this->getDoctrine()
+  			->getManager()
+  			->getRepository('JVCoreBundle:Billetterie')
+  			->find($id)
+		;
+		
+		if (null === $billetterie) {
+			throw new NotFoundHttpException("La réservation d'id ".$id." n'existe pas.");
+		}
+
+		$form = $this->createForm(BilletterieType::class, $billetterie);
+		
+		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+			
+			// On enregistre notre objet $visiteur dans la base de données
+			$em = $this->getDoctrine()->getManager();
+			//$visiteur->setBilletterie($billetterie);
+			$em->persist($billetterie);
+			$em->flush();
+
+
+			// Puis on redirige vers la page suivante
+			return $this->redirectToRoute('jv_core_paiement', array('id'=>$billetterie->getId()));
+			
+		}
+		return $this->render('JVCoreBundle:Billetterie:paiement.html.twig', array(
+			'billetterie' => $billetterie,
+			'form' => $form->createView(),
+		));
+		
 	}
 
   	public function confirmationAction()

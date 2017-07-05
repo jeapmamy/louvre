@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,24 +23,42 @@ class BilletterieType extends AbstractType
     {
         $builder
 			->add('dateReservation',DateType::class, array(
-				'widget' => 'single_text',
-				'format' => 'dd-MM-yyyy',
-				'html5' => false,
-				'attr'=> array(
-					'class' => 'form-control input-inline',
-					'readonly' => true,
-					 'data-date-format' => 'dd-mm-yyyy',)
+				'widget' 	=> 'single_text',
+				'format' 	=> 'dd/MM/yyyy',
+				'html5' 	=> false,
+				'attr'		=> array(
+					'class' 	=> 'form-control input-inline',
+					'readonly' 	=> true,)
 				)
 			)
 			->add('journee', 		ChoiceType::class, array(
-				'choices' => array('Journée' => true, 'Demi-journée' => false,),
-				'expanded' => true,
-				'multiple' => false,
-			))
+				'choices' 	=> array('Journée' => true, 'Demi-journée' => false,),
+				'expanded' 	=> true,
+				'multiple' 	=> false,
+				)
+			)
 			->add('nbTicketNormal', IntegerType::class)
 			->add('nbTicketEnfant',	IntegerType::class)
 			->add('nbTicketSenior',	IntegerType::class)
 			->add('nbTicketReduit',	IntegerType::class)
+			->add('nbTickets',		IntegerType::class, array(
+				'attr' => array(
+					'readonly' 	=> true,)
+				)
+			)
+			->add('montant',		IntegerType::class, array(
+				'attr' => array(
+					'readonly' 	=> true,)
+				)
+			)
+			->add('email',			EmailType::class)
+			->add('visiteurs',		CollectionType::class, array(
+				'entry_type' 	=> VisiteurType::class,
+				'allow_add'  	=> true,
+				'allow_delete' 	=> true,
+				'by_reference' 	=> false
+				)
+			)
 			->add('validation',     SubmitType::class);
     }
     
@@ -48,7 +68,7 @@ class BilletterieType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JV\CoreBundle\Entity\Billetterie'
+            'data_class' 	=> 'JV\CoreBundle\Entity\Billetterie'
         ));
     }
 

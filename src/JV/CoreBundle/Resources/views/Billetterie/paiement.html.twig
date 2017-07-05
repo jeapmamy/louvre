@@ -10,10 +10,35 @@
 
   	<h3>Paiement</h3>
 
-  	<p>
-	Ici le formulaire de saisie du mode de paiement
+  	<div class="well">
 		
-  	</p>
+		{{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
+		{{ form_errors(form) }}
+		
+		{{ form_row(form.dateReservation) }}
+		{{ form_row(form.journee) }}
+		{{ form_row(form.nbTicketNormal) }}
+		{{ form_row(form.nbTicketNormal) }}
+		{{ form_row(form.nbTicketEnfant) }}
+		{{ form_row(form.nbTicketSenior) }}
+		{{ form_row(form.nbTicketReduit) }}
+		{{ form_row(form.nbTickets) }}
+		{{ form_row(form.montant) }}
+		{{ form_row(form.email) }}
+
+		<hr>
+		
+		<button id="tester_valeurs" class="btn btn-success">Tester les valeurs</button>
+		
+		{{ form_row(form.visiteurs) }}
+		
+		<hr>
+				
+		{{ form_widget(form.validation, {'attr' : {'class':'btn btn-info pull-right'}}) }}			
+
+		{{ form_end(form) }}
+		
+	</div>
   	
   	
 

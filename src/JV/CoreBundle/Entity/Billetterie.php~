@@ -3,6 +3,7 @@
 namespace JV\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Billetterie
@@ -25,6 +26,8 @@ class Billetterie
      * @var \DateTime
      *
      * @ORM\Column(name="dateReservation", type="date")
+	 * @Assert\NotBlank(message="Vous devez sélectionner une date !")
+	 * @Assert\Date()
      */
     private $dateReservation;
 
@@ -62,20 +65,20 @@ class Billetterie
      * @ORM\Column(name="nbTicketReduit", type="integer")
      */
     private $nbTicketReduit;
-
-    /**
+	
+	/**
      * @var int
      *
-     * @ORM\Column(name="tarif", type="integer")
+     * @ORM\Column(name="nbTickets", type="integer")
      */
-    private $tarif;
-
-    /**
-     * @var string
+	private $nbTickets;
+	
+	/**
+     * @var int
      *
-     * @ORM\Column(name="codeReservation", type="string", length=255)
+     * @ORM\Column(name="montant", type="integer")
      */
-    private $codeReservation;
+	private $montant;
 
     /**
      * @var string
@@ -83,35 +86,17 @@ class Billetterie
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=255)
-     */
-    private $nom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="prenom", type="string", length=255)
-     */
-    private $prenom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="pays", type="string", length=255)
-     */
-    private $pays;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dateNaissance", type="date")
-     */
-    private $dateNaissance;
 	
+	/**
+     *
+     * @ORM\OneToMany(targetEntity="JV\CoreBundle\Entity\Visiteur", mappedBy="billetterie", cascade={"persist"})
+	 *
+	 * @Assert\Valid()
+	 * 
+	 *
+     */
+	private $visiteurs;
+
 
     /**
      * Get id
@@ -267,53 +252,6 @@ class Billetterie
         return $this->nbTicketReduit;
     }
 
-    /**
-     * Set tarif
-     *
-     * @param integer $tarif
-     *
-     * @return Billetterie
-     */
-    public function setTarif($tarif)
-    {
-        $this->tarif = $tarif;
-
-        return $this;
-    }
-
-    /**
-     * Get tarif
-     *
-     * @return int
-     */
-    public function getTarif()
-    {
-        return $this->tarif;
-    }
-
-    /**
-     * Set codeReservation
-     *
-     * @param string $codeReservation
-     *
-     * @return Billetterie
-     */
-    public function setCodeReservation($codeReservation)
-    {
-        $this->codeReservation = $codeReservation;
-
-        return $this;
-    }
-
-    /**
-     * Get codeReservation
-     *
-     * @return string
-     */
-    public function getCodeReservation()
-    {
-        return $this->codeReservation;
-    }
 
     /**
      * Set email
@@ -339,123 +277,97 @@ class Billetterie
         return $this->email;
     }
 
+   
     /**
-     * Set nom
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->visiteurs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add visiteur
      *
-     * @param string $nom
+     * @param \JV\CoreBundle\Entity\Visiteur $visiteur
      *
      * @return Billetterie
      */
-    public function setNom($nom)
+    public function addVisiteur(\JV\CoreBundle\Entity\Visiteur $visiteur)
     {
-        $this->nom = $nom;
+        $this->visiteurs[] = $visiteur;
+		
+		// On lie la billetterie au visiteur
+		$visiteur->setBilletterie($this);
 
         return $this;
     }
 
     /**
-     * Get nom
+     * Remove visiteur
      *
-     * @return string
+     * @param \JV\CoreBundle\Entity\Visiteur $visiteur
      */
-    public function getNom()
+    public function removeVisiteur(\JV\CoreBundle\Entity\Visiteur $visiteur)
     {
-        return $this->nom;
+        $this->visiteurs->removeElement($visiteur);
     }
 
     /**
-     * Set prenom
+     * Get visiteurs
      *
-     * @param string $prenom
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisiteurs()
+    {
+        return $this->visiteurs;
+    }
+
+    /**
+     * Set nbTickets
+     *
+     * @param integer $nbTickets
      *
      * @return Billetterie
      */
-    public function setPrenom($prenom)
+    public function setNbTickets($nbTickets)
     {
-        $this->prenom = $prenom;
+        $this->nbTickets = $nbTickets;
 
         return $this;
     }
 
     /**
-     * Get prenom
+     * Get nbTickets
      *
-     * @return string
+     * @return integer
      */
-    public function getPrenom()
+    public function getNbTickets()
     {
-        return $this->prenom;
+        return $this->nbTickets;
     }
 
     /**
-     * Set pays
+     * Set montant
      *
-     * @param string $pays
+     * @param integer $montant
      *
      * @return Billetterie
      */
-    public function setPays($pays)
+    public function setMontant($montant)
     {
-        $this->pays = $pays;
+        $this->montant = $montant;
 
         return $this;
     }
 
     /**
-     * Get pays
+     * Get montant
      *
-     * @return string
+     * @return integer
      */
-    public function getPays()
+    public function getMontant()
     {
-        return $this->pays;
-    }
-
-    /**
-     * Set dateNaissance
-     *
-     * @param \DateTime $dateNaissance
-     *
-     * @return Billetterie
-     */
-    public function setDateNaissance($dateNaissance)
-    {
-        $this->dateNaissance = $dateNaissance;
-
-        return $this;
-    }
-
-    /**
-     * Get dateNaissance
-     *
-     * @return \DateTime
-     */
-    public function getDateNaissance()
-    {
-        return $this->dateNaissance;
-    }
-
-    /**
-     * Set demiJournee
-     *
-     * @param boolean $demiJournee
-     *
-     * @return Billetterie
-     */
-    public function setDemiJournee($demiJournee)
-    {
-        $this->demiJournee = $demiJournee;
-
-        return $this;
-    }
-
-    /**
-     * Get demiJournee
-     *
-     * @return boolean
-     */
-    public function getDemiJournee()
-    {
-        return $this->demiJournee;
+        return $this->montant;
     }
 }

@@ -11,9 +11,11 @@ jv_core_reservation:
         _controller: JVCoreBundle:Billetterie:reservation
 
 jv_core_coordonnees:
-    path:      /coordonnees
+    path:      /coordonnees/{id}
     defaults: 
         _controller: JVCoreBundle:Billetterie:coordonnees
+    requirements:
+        id: \d+
 
 # jv_core_recapitulatif:
 #     path:      /recapitulatif
@@ -21,9 +23,11 @@ jv_core_coordonnees:
 #         _controller: JVCoreBundle:Billetterie:recapitulatif
 
 jv_core_paiement:
-    path:      /paiement
+    path:      /paiement/{id}
     defaults: 
         _controller: JVCoreBundle:Billetterie:paiement
+    requirements:
+        id: \d+
 
 jv_core_confirmation:
     path:      /confirmation

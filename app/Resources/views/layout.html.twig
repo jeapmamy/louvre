@@ -12,7 +12,7 @@
 	{% block stylesheets %} {# On charge le CSS de bootstrap depuis le site directement #}
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css">
-	<link rel="stylesheet" href="../bundles/css/style.css">
+	<link rel="stylesheet" href="http://localhost/louvre/web/bundles/css/style.css">
 	<style>
 		
 	</style>
@@ -26,7 +26,14 @@
 <body>
 	<div class="container">
 		<div id="header" class="jumbotron">
-			<h1>Musée du Louvre</h1>
+			<div class="row">
+				<div class="col-md-3">
+					<img src="http://localhost/louvre/web/bundles/image/louvre.jpg" id="logo">
+				</div>
+				<div class="col-md-9">	
+					<h1>Musée du Louvre</h1>
+				</div>
+			</div>
 		</div>
 
 		<div class="row">
@@ -37,7 +44,7 @@
 				<h3>Les étapes</h3>
 				<ul class="nav nav-pills nav-stacked">
 					<li><a href="{{ path('jv_core_reservation') }}">1 - Réservation</a></li>
-					<li><a href="{{ path('jv_core_coordonnees') }}">2 - Coordonnées</a></li>
+					
 					<li><a href="#">3 - Paiement</a></li>
 					<li><a href="#">4 - Confirmation</a></li>
 				</ul>
@@ -58,7 +65,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="../bundles/js/main.js"></script>
+	<script src="http://localhost/louvre/web/bundles/js/main.js"></script>
 	{% endblock %}
 	
 	{% block script %}
