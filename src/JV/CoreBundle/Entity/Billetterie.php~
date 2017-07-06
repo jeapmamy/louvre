@@ -84,8 +84,19 @@ class Billetterie
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+	 * @Assert\Email(
+     *     message = "L'adresse email n'est pas valide.",
+     *     checkMX = true
+     * )
      */
     private $email;
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="codeReservation", type="string", length=255)
+	 */
+	private $codeReservation;
 	
 	/**
      *

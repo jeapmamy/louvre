@@ -25,10 +25,11 @@
 						{{ form_label(form.dateReservation, 'Date : ')}}
 						{{ form_widget(form.dateReservation) }}
 						{{ form_errors(form.dateReservation)}}
-						<span id="messageDate"></span>
 					</div>
 					<i class="glyphicon glyphicon-info-sign" id="infoDate"></i>
 				</div>
+				<br />
+				<span id="messageDate"></span>
 				<hr>
 				<div class="row">
 					<div class="col-md-4">
@@ -96,8 +97,10 @@
 						<br />
 					</div>
 				</div>
-				
+				<br />
+				<span id="messageTicket"></span>
 				<hr>
+				
 				<div class="row">
 					<div class="col-md-4">
 						{{ form_label(form.email, 'Email : ')}}
@@ -106,6 +109,8 @@
 					</div>
 					<i class="glyphicon glyphicon-info-sign" id="infoEmail"></i>
 				</div>
+				<br />
+				<span id="messageEmail"></span>
 				<hr>
 				
 				{{ form_widget(form.validation, {'attr' : {'class':'btn btn-info pull-right'}}) }}

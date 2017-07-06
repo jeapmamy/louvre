@@ -42,6 +42,8 @@ class Billetterie
      * @var int
      *
      * @ORM\Column(name="nbTicketNormal", type="integer")
+	 *
+	 * @Assert\Range(min=0, max=100)
      */
     private $nbTicketNormal;
 
@@ -49,6 +51,8 @@ class Billetterie
      * @var int
      *
      * @ORM\Column(name="nbTicketEnfant", type="integer")
+	 *
+	 * @Assert\Range(min=0, max=100)
      */
     private $nbTicketEnfant;
 
@@ -56,6 +60,8 @@ class Billetterie
      * @var int
      *
      * @ORM\Column(name="nbTicketSenior", type="integer")
+	 *
+	 * @Assert\Range(min=0, max=100)
      */
     private $nbTicketSenior;
 
@@ -63,6 +69,8 @@ class Billetterie
      * @var int
      *
      * @ORM\Column(name="nbTicketReduit", type="integer")
+	 *
+	 * @Assert\Range(min=0, max=100)
      */
     private $nbTicketReduit;
 	
@@ -84,8 +92,19 @@ class Billetterie
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+	 * @Assert\Email(
+     *     message = "L'adresse email n'est pas valide.",
+     *     checkMX = true
+     * )
      */
     private $email;
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="codeReservation", type="string", length=255)
+	 */
+	private $codeReservation;
 	
 	/**
      *
@@ -369,5 +388,29 @@ class Billetterie
     public function getMontant()
     {
         return $this->montant;
+    }
+
+    /**
+     * Set codeReservation
+     *
+     * @param string $codeReservation
+     *
+     * @return Billetterie
+     */
+    public function setCodeReservation($codeReservation)
+    {
+        $this->codeReservation = $codeReservation;
+
+        return $this;
+    }
+
+    /**
+     * Get codeReservation
+     *
+     * @return string
+     */
+    public function getCodeReservation()
+    {
+        return $this->codeReservation;
     }
 }

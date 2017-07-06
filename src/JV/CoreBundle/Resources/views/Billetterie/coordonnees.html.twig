@@ -17,6 +17,8 @@
 		{{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
 		{{ form_errors(form) }}
 		
+		<div class ="recapCommande">
+		
 		{{ form_row(form.dateReservation) }}
 		{{ form_row(form.journee) }}
 		{{ form_row(form.nbTicketNormal) }}
@@ -29,12 +31,23 @@
 		{{ form_row(form.email) }}
 
 		<hr>
+		</div>
+		
+		<div>
+			<p><strong>Récapitulatif de votre commande :</strong></p>
+			<p>Votre réservation comprend {{ billetterie.nbTickets }} ticket(s), pour le {{ "now"|date("d/m/Y") }}.</p>
+			<p>{{ billetterie.nbTicketNormal }} - Normal, {{ billetterie.nbTicketEnfant }} - Enfant,
+			{{ billetterie.nbTicketSenior }} - Senior et {{ billetterie.nbTicketReduit }} - Reduit.</p>
+			<p>Pour un montant total de {{ billetterie.montant }} €.</p>
+		</div>
 		
 		<button id="ajouter_visiteur" class="btn btn-info">Saisir les coordonnées du ou des visiteur(s)</button>
 		
 		{{ form_row(form.visiteurs) }}
 		
 		<hr>
+		
+		<span id="messageErrorDate"></span>
 				
 		{{ form_widget(form.validation, {'attr' : {'class':'btn btn-info pull-right'}}) }}			
 
