@@ -41,9 +41,11 @@
 			<p>Pour un montant total de {{ billetterie.montant }} €.</p>
 		</div>
 		
-		<button id="ajouter_visiteur" class="btn btn-info">Saisir les coordonnées du ou des visiteur(s)</button>
+		<button id="ajouter_visiteur" class="btn btn-info">Saisir les coordonnées</button>
+
+			{{ form_row(form.visiteurs) }}	
 		
-		{{ form_row(form.visiteurs) }}
+		<button id="tester_date" class="btn btn-success">Enregistrer</button>
 		
 		<hr>
 		

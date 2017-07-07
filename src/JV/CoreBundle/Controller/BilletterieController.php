@@ -6,6 +6,7 @@ namespace JV\CoreBundle\Controller;
 
 use JV\CoreBundle\Entity\Billetterie;
 use JV\CoreBundle\Entity\Visiteur;
+use JV\CoreBundle\Entity\Compteur;
 use JV\CoreBundle\Form\BilletterieType;
 use JV\CoreBundle\Form\VisiteurType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,8 +32,38 @@ class BilletterieController extends Controller
 			
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 			
+			// Veriication des 1000 places...
+			$compteur = $this
+				->getDoctrine()
+  				->getManager()
+  				->getRepository('JVCoreBundle:Compteur')
+  				->findOneByDate($billetterie->getDateReservation())
+			;
+
+			if (null === $compteur) {
+				$compteur = new Compteur();
+				$compteur->setDate($billetterie->getDateReservation());
+				$compteur->setNombre($billetterie->getNbTickets());
+			}
+			else {
+				$nbResa = $billetterie->getNbTickets();
+				$nbBdd = $compteur->getNombre();
+				$nbTotal = $nbResa+$nbBdd;
+				if ($nbTotal > 1000) {
+					return $this->render('JVCoreBundle:Billetterie:reservation.html.twig', array(
+					  	'billetterie' => $billetterie,
+						'form' => $form->createView(),
+					));
+				}
+				else {
+					$compteur->setNombre($nbTotal);
+				}
+			}
+			
+			//$billetterie->setCodeReservation('ESSAI0000');
 			// On enregistre notre objet $billetterie dans la base de données
 			$em = $this->getDoctrine()->getManager();
+			$em->persist($compteur);
 			$em->persist($billetterie);
 			$em->flush();
 

@@ -42,6 +42,8 @@ class Billetterie
      * @var int
      *
      * @ORM\Column(name="nbTicketNormal", type="integer")
+	 *
+	 * @Assert\Range(min=0, max=100)
      */
     private $nbTicketNormal;
 
@@ -49,6 +51,8 @@ class Billetterie
      * @var int
      *
      * @ORM\Column(name="nbTicketEnfant", type="integer")
+	 *
+	 * @Assert\Range(min=0, max=100)
      */
     private $nbTicketEnfant;
 
@@ -56,6 +60,8 @@ class Billetterie
      * @var int
      *
      * @ORM\Column(name="nbTicketSenior", type="integer")
+	 *
+	 * @Assert\Range(min=0, max=100)
      */
     private $nbTicketSenior;
 
@@ -63,6 +69,8 @@ class Billetterie
      * @var int
      *
      * @ORM\Column(name="nbTicketReduit", type="integer")
+	 *
+	 * @Assert\Range(min=0, max=100)
      */
     private $nbTicketReduit;
 	
@@ -107,6 +115,16 @@ class Billetterie
 	 *
      */
 	private $visiteurs;
+	
+	
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->visiteurs = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->codeReservation = $this->creationCodeReservation();
+    }
 
 
     /**
@@ -289,13 +307,6 @@ class Billetterie
     }
 
    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->visiteurs = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add visiteur
@@ -381,4 +392,44 @@ class Billetterie
     {
         return $this->montant;
     }
+
+    /**
+     * Set codeReservation
+     *
+     * @param string $codeReservation
+     *
+     * @return Billetterie
+     */
+    public function setCodeReservation($codeReservation)
+    {
+        $this->codeReservation = $codeReservation;
+
+        return $this;
+    }
+
+    /**
+     * Get codeReservation
+     *
+     * @return string
+     */
+    public function getCodeReservation()
+    {
+        return $this->codeReservation;
+    }
+	
+	/**
+     * * @return string
+     *
+     */
+    public function creationCodeReservation()
+    {
+		$codeReservation = "";
+		$chaine = "AZERTYUIOPQSDFGHJKLMWXCVBN123456789";
+		for ($i = 0; $i < 10; $i++) {
+			$codeReservation .= $chaine[rand() % strlen($chaine)];
+		}
+		
+		return $codeReservation;
+    }
+	
 }

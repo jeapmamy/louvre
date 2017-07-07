@@ -115,6 +115,16 @@ class Billetterie
 	 *
      */
 	private $visiteurs;
+	
+	
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->visiteurs = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->codeReservation = $this->creationCodeReservation();
+    }
 
 
     /**
@@ -297,13 +307,6 @@ class Billetterie
     }
 
    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->visiteurs = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add visiteur
@@ -413,4 +416,20 @@ class Billetterie
     {
         return $this->codeReservation;
     }
+	
+	/**
+     * * @return string
+     *
+     */
+    public function creationCodeReservation()
+    {
+		$codeReservation = "";
+		$chaine = "abcdefghijklmnopqrstuvwxyzAZERTYUIOPQSDFGHJKLMWXCVBN123456789";
+		for ($i = 0; $i < 10; $i++) {
+			$codeReservation .= $chaine[rand() % strlen($chaine)];
+		}
+		
+		return $codeReservation;
+    }
+	
 }
