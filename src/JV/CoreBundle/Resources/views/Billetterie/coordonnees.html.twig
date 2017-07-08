@@ -30,7 +30,6 @@
 		{{ form_row(form.montant) }}
 		{{ form_row(form.email) }}
 
-		<hr>
 		</div>
 		
 		<div>
@@ -41,10 +40,13 @@
 			<p>Pour un montant total de {{ billetterie.montant }} €.</p>
 		</div>
 		
+		<hr>
+		
 		<button id="ajouter_visiteur" class="btn btn-info">Saisir les coordonnées</button>
 
 			{{ form_row(form.visiteurs) }}	
 		
+		<br />
 		<button id="tester_date" class="btn btn-success">Enregistrer</button>
 		
 		<hr>

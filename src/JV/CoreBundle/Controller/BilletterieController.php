@@ -137,7 +137,7 @@ class BilletterieController extends Controller
 		if (null === $billetterie) {
 			throw new NotFoundHttpException("La réservation d'id ".$id." n'existe pas.");
 		}
-
+/*
 		$form = $this->createForm(BilletterieType::class, $billetterie);
 		
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
@@ -153,12 +153,15 @@ class BilletterieController extends Controller
 			return $this->redirectToRoute('jv_core_paiement', array('id'=>$billetterie->getId()));
 			
 		}
+		
+*/
 		return $this->render('JVCoreBundle:Billetterie:paiement.html.twig', array(
 			'billetterie' => $billetterie,
-			'form' => $form->createView(),
+			//'form' => $form->createView(),
 		));
 		
 	}
+	
 
   	public function confirmationAction()
 	{

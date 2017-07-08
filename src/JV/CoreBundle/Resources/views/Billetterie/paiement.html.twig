@@ -10,35 +10,30 @@
 
   	<h3>Paiement</h3>
 
-  	<div class="well">
-		
-		{{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
-		{{ form_errors(form) }}
-		
-		{{ form_row(form.dateReservation) }}
-		{{ form_row(form.journee) }}
-		{{ form_row(form.nbTicketNormal) }}
-		{{ form_row(form.nbTicketNormal) }}
-		{{ form_row(form.nbTicketEnfant) }}
-		{{ form_row(form.nbTicketSenior) }}
-		{{ form_row(form.nbTicketReduit) }}
-		{{ form_row(form.nbTickets) }}
-		{{ form_row(form.montant) }}
-		{{ form_row(form.email) }}
+  	<div id="wrapper">
+        <div id="container">
+            <div id="welcome">
+                <h1><span>Projet Stripe</span> Mentorat OpenClassroom</h1>
+            </div>
 
-		<hr>
-		
-		<button id="tester_valeurs" class="btn btn-success">Tester les valeurs</button>
-		
-		{{ form_row(form.visiteurs) }}
-		
-		<hr>
-				
-		{{ form_widget(form.validation, {'attr' : {'class':'btn btn-info pull-right'}}) }}			
-
-		{{ form_end(form) }}
-		
-	</div>
+            <div id="status">
+                <p>
+					Vous êtes sur le point de payer votre commande.
+				</p>
+				<form action="" method="POST">
+					<script
+							src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+							data-key="pk_test_AcMEBvAm1KZKkWRVxFLlHdmA"
+							data-amount="99500"
+							data-name="oc-stripe"
+							data-description="Widget"
+							data-locale="auto"
+							data-currency="eur">
+					</script>
+				</form>
+            </div>
+        </div>
+    </div>
   	
   	
 
