@@ -12,12 +12,12 @@
 
 	
 
-	<div class="well">
+	<div>
 		
 		{{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
 		{{ form_errors(form) }}
 		
-		<div class ="recapCommande">
+		<div class ="recapFormCommande">
 		
 		{{ form_row(form.dateReservation) }}
 		{{ form_row(form.journee) }}
@@ -32,7 +32,7 @@
 
 		</div>
 		
-		<div>
+		<div class ="recapCommande">
 			<p><strong>Récapitulatif de votre commande :</strong></p>
 			<p>Votre réservation comprend {{ billetterie.nbTickets }} ticket(s), pour le {{ "now"|date("d/m/Y") }}.</p>
 			<p>{{ billetterie.nbTicketNormal }} - Normal, {{ billetterie.nbTicketEnfant }} - Enfant,

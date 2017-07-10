@@ -54,6 +54,7 @@ class BilletterieType extends AbstractType
 			->add('email',			EmailType::class)
 			->add('visiteurs',		CollectionType::class, array(
 				'entry_type' 	=> VisiteurType::class,
+				'label'			=> false,
 				'allow_add'  	=> true,
 				'allow_delete' 	=> true,
 				'by_reference' 	=> false

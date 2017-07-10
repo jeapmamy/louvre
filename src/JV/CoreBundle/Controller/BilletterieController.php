@@ -162,9 +162,54 @@ class BilletterieController extends Controller
 		
 	}
 	
+	public function checkoutAction($id, Request $request)
+    {
+        $billetterie = $this->getDoctrine()
+  			->getManager()
+  			->getRepository('JVCoreBundle:Billetterie')
+  			->find($id)
+		;
+		
+		if (null === $billetterie) {
+			throw new NotFoundHttpException("La réservation d'id ".$id." n'existe pas.");
+		}
+		
+		\Stripe\Stripe::setApiKey("sk_test_qrE9oszVPUZtg6BNexIhTSvB");
 
-  	public function confirmationAction()
+        // Get the credit card details submitted by the form
+        $token = $_POST['stripeToken'];
+
+        // Create a charge: this will charge the user's card
+        try {
+            $charge = \Stripe\Charge::create(array(
+                "amount" => $billetterie->getMontant()*100, // Amount in cents
+                "currency" => "eur",
+                "source" => $token,
+                "description" => "Paiement Stripe - Musée du Louvre"
+            ));
+            $this->addFlash("success","Bravo ça marche !");
+            return $this->redirectToRoute("jv_corebundle_confirmation", array('id'=>$billetterie->getId()));
+        } catch(\Stripe\Error\Card $e) {
+
+            $this->addFlash("error","Snif ça marche pas :(");
+            return $this->redirectToRoute("jv_corebundle_paiement", array('id'=>$billetterie->getId()));
+            // The card has been declined
+        }
+    }
+	
+
+  	public function confirmationAction($id, Request $request)
 	{
+		$billetterie = $this->getDoctrine()
+  			->getManager()
+  			->getRepository('JVCoreBundle:Billetterie')
+  			->find($id)
+		;
+		
+		if (null === $billetterie) {
+			throw new NotFoundHttpException("La réservation d'id ".$id." n'existe pas.");
+		}
+		
 		return $this->render('JVCoreBundle:Billetterie:confirmation.html.twig');
 	}
 }

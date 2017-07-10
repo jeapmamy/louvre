@@ -12,27 +12,30 @@
 
   	<div id="wrapper">
         <div id="container">
-            <div id="welcome">
-                <h1><span>Projet Stripe</span> Mentorat OpenClassroom</h1>
-            </div>
+			<div id="welcome">
+				<h4>Vous êtes sur le point de payer votre commande,<br /><br />
+					{{ billetterie.nbTickets }} Ticket(s)<br /><br />
+					<strong>{{ billetterie.montant }} €</strong>
+				</h4>
+			</div>
 
-            <div id="status">
-                <p>
-					Vous êtes sur le point de payer votre commande.
+			<div id="status">
+				<p>
+					<!--Vous êtes sur le point de payer votre commande.-->
 				</p>
-				<form action="" method="POST">
+				<form action="{{ path('jv_core_checkout', {'id': billetterie.id}) }}" method="POST">
 					<script
 							src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 							data-key="pk_test_AcMEBvAm1KZKkWRVxFLlHdmA"
-							data-amount="99500"
-							data-name="oc-stripe"
-							data-description="Widget"
+							data-amount="{{ billetterie.montant*100 }}"
+							data-name="Musée du Louvre"
+							data-description="Paiement CB"
 							data-locale="auto"
 							data-currency="eur">
 					</script>
 				</form>
-            </div>
-        </div>
+			</div>
+		</div>
     </div>
   	
   	

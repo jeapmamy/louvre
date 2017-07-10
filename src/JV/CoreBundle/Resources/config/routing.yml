@@ -30,6 +30,15 @@ jv_core_paiement:
         id: \d+
 
 jv_core_confirmation:
-    path:      /confirmation
+    path:      /confirmation/{id}
     defaults: 
         _controller: JVCoreBundle:Billetterie:confirmation
+    requirements:
+        id: \d+
+
+jv_core_checkout:
+    path:      /checkout/{id}
+    defaults: 
+        _controller: JVCoreBundle:Billetterie:checkout
+    requirements:
+        id: \d+
