@@ -60,7 +60,8 @@ class BilletterieType extends AbstractType
 				'by_reference' 	=> false
 				)
 			)
-			->add('validation',     SubmitType::class);
+			->add('validation',     SubmitType::class)
+		;
     }
     
     /**

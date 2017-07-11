@@ -110,6 +110,7 @@ class BilletterieController extends Controller
 			// Puis on redirige vers la page suivante
 			return $this->redirectToRoute('jv_core_paiement', array('id'=>$billetterie->getId()));
 			
+			
 		}
 			
 		
@@ -162,7 +163,7 @@ class BilletterieController extends Controller
 		
 	}
 	
-	public function checkoutAction($id, Request $request)
+	public function checkoutAction($id, Request $request, \Swift_Mailer $mailer)
     {
         $billetterie = $this->getDoctrine()
   			->getManager()
@@ -188,7 +189,27 @@ class BilletterieController extends Controller
                 "description" => "Paiement Stripe - Musée du Louvre"
             ));
             $this->addFlash("success","Bravo ça marche !");
+			
+			// Envoi d'un email
+			$email = $billetterie->getEmail();
+			$message = (new \Swift_Message('Hello Email'))
+				->setSubject('Confirmation de votre commande')
+				->setFrom('contact@louvre.fr')
+				->setTo($email)
+				->setBody(
+					$this->renderView(
+						'JVCoreBundle:Billetterie:mail.html.twig', array(
+							'billetterie' => $billetterie,)
+					),
+					'text/html'
+				)
+			;
+
+			$mailer->send($message);
+		
             return $this->redirectToRoute("jv_corebundle_confirmation", array('id'=>$billetterie->getId()));
+			
+			
         } catch(\Stripe\Error\Card $e) {
 
             $this->addFlash("error","Snif ça marche pas :(");
@@ -200,6 +221,8 @@ class BilletterieController extends Controller
 
   	public function confirmationAction($id, Request $request)
 	{
+		$session = $request->getSession();
+		
 		$billetterie = $this->getDoctrine()
   			->getManager()
   			->getRepository('JVCoreBundle:Billetterie')
@@ -210,7 +233,25 @@ class BilletterieController extends Controller
 			throw new NotFoundHttpException("La réservation d'id ".$id." n'existe pas.");
 		}
 		
-		return $this->render('JVCoreBundle:Billetterie:confirmation.html.twig');
+		$email = $billetterie->getEmail();
+		
+		$message = \Swift_Message::newInstance()
+			->setSubject('Confirmation de votre commande')
+			->setFrom(['contact@louvre.fr' => 'Musée du Louvre'])
+			->setTo($email)
+			->setBody($this->renderView(
+				'Emails/mail.html.twig', array(
+					'billetterie' => $billetterie,)
+				),
+				'text/html'
+			)
+		;
+		
+		$this->get('mailer')->send($message);
+		
+		$session->getFlashBag()->add('success', 'Votre commande est validée avec succes');
+		
+		return $this->redirectToRoute('jv_core_coordonnees', array('id'=>$billetterie->getId()));
 	}
 }
 

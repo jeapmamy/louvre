@@ -11,7 +11,11 @@
   	<h3>Coordonnées</h3>
 
 	
-
+	<div>
+		{% for message in app.session.flashbag.get('success') %}
+			<p>Message flash : {{ message }}</p>
+		{% endfor %}
+	</div>
 	<div>
 		
 		{{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
@@ -34,7 +38,7 @@
 		
 		<div class ="recapCommande">
 			<p><strong>Récapitulatif de votre commande :</strong></p>
-			<p>Votre réservation comprend {{ billetterie.nbTickets }} ticket(s), pour le {{ "now"|date("d/m/Y") }}.</p>
+			<p>Votre réservation comprend {{ billetterie.nbTickets }} ticket(s), pour le {{ billetterie.dateReservation|date('d/m/Y') }}.</p>
 			<p>{{ billetterie.nbTicketNormal }} - Normal, {{ billetterie.nbTicketEnfant }} - Enfant,
 			{{ billetterie.nbTicketSenior }} - Senior et {{ billetterie.nbTicketReduit }} - Reduit.</p>
 			<p>Pour un montant total de {{ billetterie.montant }} €.</p>
@@ -43,9 +47,14 @@
 		<hr>
 		
 		<button id="ajouter_visiteur" class="btn btn-info">Saisir les coordonnées</button>
-
-			{{ form_row(form.visiteurs) }}	
 		
+		<div class="container col-md-12">
+			<div class="row">
+
+				{{ form_row(form.visiteurs) }}	
+				
+			</div>
+		</div>
 		<br />
 		<button id="tester_date" class="btn btn-success">Enregistrer</button>
 		
@@ -53,7 +62,7 @@
 		
 		<span id="messageErrorDate"></span>
 				
-		{{ form_widget(form.validation, {'attr' : {'class':'btn btn-info pull-right'}}) }}			
+		{{ form_widget(form.validation, {'attr' : {'class':'btn btn-info pull-right'}}) }}
 
 		{{ form_end(form) }}
 		
