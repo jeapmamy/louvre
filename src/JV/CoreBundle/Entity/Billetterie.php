@@ -108,7 +108,7 @@ class Billetterie
 	
 	/**
      *
-     * @ORM\OneToMany(targetEntity="JV\CoreBundle\Entity\Visiteur", mappedBy="billetterie", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="JV\CoreBundle\Entity\Visiteur", mappedBy="billetterie", cascade={"persist","remove"})
 	 *
 	 * @Assert\Valid()
 	 * 

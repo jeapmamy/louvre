@@ -42,3 +42,10 @@ jv_core_checkout:
         _controller: JVCoreBundle:Billetterie:checkout
     requirements:
         id: \d+
+
+jv_core_delete:
+    path:      /delete/{id}
+    defaults: 
+        _controller: JVCoreBundle:Billetterie:delete
+    requirements:
+        id: \d+

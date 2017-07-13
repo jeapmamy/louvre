@@ -20,27 +20,20 @@ class VisiteurType extends AbstractType
     {
         $builder
 			->add('nom',			TextType::class, array(
-				'label' => 'Nom : ',
-				'attr' => array(
-					'class' => 'col-md-6',)
+				'label' => 'Nom : ',			
 				)
 			)
 			->add('prenom',			TextType::class, array(
 				'label' => 'Prénom : ',
-				'attr' => array(
-					'class' => 'col-md-6',)
 				)
 			)
 			->add('pays',			TextType::class, array(
 				'label' => 'Pays : ',
-				'attr' => array(
-					'class' => 'col-md-6',)
 				)
 			)
 			->add('dateNaissance',	BirthdayType::class, array(
 				'label' => 'Date de naissance : ',
 				'attr' => array(
-					'class' => 'col-md-6',
 					'placeholder' => 'jj/mm/aaaa',
 				),				
 				'format' => 'dd/MM/yyyy',
@@ -50,16 +43,12 @@ class VisiteurType extends AbstractType
 			->add('ticket',			TextType::class, array(
 				'label' => 'Ticket : ',	
 				'attr' => array(
-					'class' => 'col-md-6',
-					'id' => 'ticket',
 					'readonly' => true,)
 				)
 			)
 			->add('prix',			IntegerType::class, array(
 				'label' => 'Prix : ',	
 				'attr' => array(
-					'class' => 'col-md-6',
-					'id' => 'prix',
 					'readonly' => true,)
 				)
 			);		

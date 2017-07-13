@@ -28,7 +28,9 @@
 		<div id="header" class="jumbotron">
 			<div class="row">
 				<div class="col-md-3">
-					<img src="http://localhost/louvre/web/bundles/image/louvre.jpg" id="logo">
+					<a href="{{ path('jv_core_home') }}">
+						<img src="http://localhost/louvre/web/bundles/image/louvre.jpg" id="logo">
+					</a>
 				</div>
 				<div class="col-md-9">	
 					<h1>Musée du Louvre</h1>
@@ -43,10 +45,10 @@
 				</ul>
 				<h3>Les étapes</h3>
 				<ul class="nav nav-pills nav-stacked">
-					<li><a href="{{ path('jv_core_reservation') }}">1 - Réservation</a></li>
-					
-					<li><a href="#">3 - Paiement</a></li>
-					<li><a href="#">4 - Confirmation</a></li>
+					<li><a href="#" id="menuReservation">1 - Réservation</a></li>
+					<li><a href="#" id="menuCoordonnees">2 - Coordonnées</a></li>
+					<li><a href="#" id="menuPaiement">3 - Paiement</a></li>
+					<li><a href="#" id="menuConfirmation">4 - Confirmation</a></li>
 				</ul>
 			</div>
 			<div id="content" class="col-md-offset-1 col-md-9">

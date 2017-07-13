@@ -12,11 +12,16 @@
 
   	<div id="wrapper">
         <div id="container">
-			<div id="welcome">
-				<h4>Vous êtes sur le point de payer votre commande,<br /><br />
-					{{ billetterie.nbTickets }} Ticket(s)<br /><br />
-					<strong>{{ billetterie.montant }} €</strong>
-				</h4>
+			<div class="welcome">
+				<div class ="recapCommandeTitre">
+					<h4>Vous êtes sur le point de payer votre commande :</h4>
+				</div>
+				<div class = "recapCommandeCorps">
+					<p>
+						{{ billetterie.nbTickets }} Ticket(s)<br /><br />
+						<strong>{{ billetterie.montant }} €</strong>
+					</p>
+				</div>
 			</div>
 
 			<div id="status">
@@ -31,13 +36,33 @@
 							data-name="Musée du Louvre"
 							data-description="Paiement CB"
 							data-locale="auto"
+							data-email="{{ billetterie.email }}"
+							data-label="Paiement CB"
+							data-image="http://localhost/louvre/web/bundles/image/logo.jpg"
 							data-currency="eur">
 					</script>
 				</form>
 			</div>
 		</div>
     </div>
+
+	<br />	
+
+	<hr>
+
+	<div>		
+		<a href="{{ path('jv_core_delete', {'id': billetterie.id}) }}" class="btn btn-warning pull-left">
+			<i class="glyphicon glyphicon-trash"></i>
+			Abandonner la commande
+		</a>
+	</div>
   	
   	
 
+{% endblock %}
+
+{% block script %}
+	<script>
+
+	</script>
 {% endblock %}

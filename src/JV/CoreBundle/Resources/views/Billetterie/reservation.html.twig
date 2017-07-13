@@ -15,34 +15,44 @@
 {% block jvcore_body %}
 
 	<h3>Réservation</h3>
+
+		{% for style, message in app.session.flashbag.get('visite') %}
+			{%if style == 'visite'%} {% set type = 'danger' %} {%endif%}
+        		<div class="alert alert-{{ type }}">
+					<p><strong>Information : </strong>{{ message }}</p>
+        		</div>
+		{% endfor %}
 	
 		{{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
 		{{ form_errors(form) }}
-		
+		<div class="reservation">
 			<div class="container col-md-12">
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-xs-10 col-sm-6 col-md-4 col-lg-4">
 						{{ form_label(form.dateReservation, 'Date : ')}}
 						{{ form_widget(form.dateReservation) }}
 						{{ form_errors(form.dateReservation)}}
 					</div>
-					<i class="glyphicon glyphicon-info-sign" id="infoDate"></i>
+					<div class="col-xs-2 col-sm-6 col-md-4 col-lg-4">
+						<i class="glyphicon glyphicon-info-sign" id="infoDate"></i>
+					</div>
 				</div>
 				<br />
 				<span id="messageDate"></span>
 				<hr>
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-xs-10 col-sm-6 col-md-4 col-lg-4">
 						{{ form_label(form.journee, 'Journée : ')}}
 						{{ form_widget(form.journee) }}
 						{{ form_errors(form.journee)}}
 					</div>
-					
+					<div class="col-xs-2 col-sm-6 col-md-4 col-lg-4">
 					<i class="glyphicon glyphicon-info-sign" id="infoJournee"></i>
+					</div>
 				</div>
 				<hr>
 				<div class="row">
-					<div class="col-md-2 blocTarif">
+					<div class="col-xs-5 col-sm-2 col-md-2 col-lg-2 blocTarif">
 						<div class="tarif">Tarif Normal
 							<br /><span id="tn"> 16 </span> €</div>
 						<br />
@@ -50,7 +60,7 @@
 						{{ form_errors(form.nbTicketNormal)}}
 						<br />
 					</div>
-					<div class="col-md-2 blocTarif">
+					<div class="col-xs-5 col-sm-2 col-md-2 col-lg-2 blocTarif">
 						<div class="tarif">Tarif Enfant
 								<br /><span id="te"> 8 </span> €</div>
 							<br />
@@ -58,7 +68,7 @@
 						{{ form_errors(form.nbTicketEnfant)}}
 						<br />
 					</div>
-					<div class="col-md-2 blocTarif">
+					<div class="col-xs-5 col-sm-2 col-md-2 col-lg-2 blocTarif">
 						<div class="tarif">Tarif Senior
 								<br /><span id="ts"> 12 </span> €</div>
 							<br />
@@ -66,7 +76,7 @@
 						{{ form_errors(form.nbTicketSenior)}}
 						<br />
 					</div>
-					<div class="col-md-2 blocTarif">
+					<div class="col-xs-5 col-sm-2 col-md-2 col-lg-2 blocTarif">
 						<div class="tarif">Tarif Réduit
 								<br /><span id="tr"> 10 </span> €</div>
 							<br />
@@ -74,24 +84,26 @@
 						{{ form_errors(form.nbTicketReduit)}}
 						<br />
 					</div>
-					<i class="glyphicon glyphicon-info-sign" id="infoTarif"></i>
+					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+						<i class="glyphicon glyphicon-info-sign" id="infoTarif"></i>
+					</div>
 				</div>
 				<hr>
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 						Nombre de place(s) réservée(s) : 
 					</div>
-					<div class="col-md-4">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 						{{ form_widget(form.nbTickets, {'attr': {'class': 'form-control', 'id': 'nbTickets', 'value': 0 }}) }}
 						{{ form_errors(form.nbTickets)}}
 					</div>
 				</div>
 				<br /><br />
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 						pour un montant de :
 					</div>
-					<div class="col-md-4">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 						{{ form_widget(form.montant, {'attr': {'class': 'form-control', 'id': 'montant', 'value': 0 }}) }}
 						{{ form_errors(form.nbTicketEnfant)}}
 						<br />
@@ -102,22 +114,23 @@
 				<hr>
 				
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-xs-10 col-sm-6 col-md-4 col-lg-4">
 						{{ form_label(form.email, 'Email : ')}}
 						{{ form_widget(form.email) }}
 						{{ form_errors(form.email)}}
 					</div>
-					<i class="glyphicon glyphicon-info-sign" id="infoEmail"></i>
+					<div class="col-xs-2 col-sm-6 col-md-4 col-lg-4">
+						<i class="glyphicon glyphicon-info-sign" id="infoEmail"></i>
+					</div>
 				</div>
 				<br />
 				<span id="messageEmail"></span>
 				<hr>
 				
-				{{ form_widget(form.validation, {'attr' : {'class':'btn btn-info pull-right' }}) }}
+				{{ form_widget(form.validation, { 'label': 'Suivant 2/4  >>>', 'attr' : {'class':'btn btn-info pull-right'}}) }}
 				
-						
 			</div>
-			
+		</div>	
 		{{ form_end(form) }}
 
 	

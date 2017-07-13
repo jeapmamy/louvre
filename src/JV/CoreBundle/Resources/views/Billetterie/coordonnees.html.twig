@@ -12,36 +12,39 @@
 
 	
 	<div>
-		{% for message in app.session.flashbag.get('success') %}
-			<p>Message flash : {{ message }}</p>
-		{% endfor %}
-	</div>
-	<div>
 		
 		{{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
 		{{ form_errors(form) }}
 		
 		<div class ="recapFormCommande">
 		
-		{{ form_row(form.dateReservation) }}
-		{{ form_row(form.journee) }}
-		{{ form_row(form.nbTicketNormal) }}
-		{{ form_row(form.nbTicketNormal) }}
-		{{ form_row(form.nbTicketEnfant) }}
-		{{ form_row(form.nbTicketSenior) }}
-		{{ form_row(form.nbTicketReduit) }}
-		{{ form_row(form.nbTickets) }}
-		{{ form_row(form.montant) }}
-		{{ form_row(form.email) }}
+			{{ form_row(form.dateReservation) }}
+			{{ form_row(form.journee) }}
+			{{ form_row(form.nbTicketNormal) }}
+			{{ form_row(form.nbTicketNormal) }}
+			{{ form_row(form.nbTicketEnfant) }}
+			{{ form_row(form.nbTicketSenior) }}
+			{{ form_row(form.nbTicketReduit) }}
+			{{ form_row(form.nbTickets) }}
+			{{ form_row(form.montant) }}
+			{{ form_row(form.email) }}
 
 		</div>
 		
-		<div class ="recapCommande">
-			<p><strong>Récapitulatif de votre commande :</strong></p>
-			<p>Votre réservation comprend {{ billetterie.nbTickets }} ticket(s), pour le {{ billetterie.dateReservation|date('d/m/Y') }}.</p>
-			<p>{{ billetterie.nbTicketNormal }} - Normal, {{ billetterie.nbTicketEnfant }} - Enfant,
-			{{ billetterie.nbTicketSenior }} - Senior et {{ billetterie.nbTicketReduit }} - Reduit.</p>
-			<p>Pour un montant total de {{ billetterie.montant }} €.</p>
+		<div class="welcome">
+			<div class ="recapCommandeTitre">
+				<h4>Récapitulatif de votre commande :</h4>
+			</div>
+			<div class = "recapCommandeCorps">
+				<p>Votre réservation comprend,</p>
+				<p>{{ billetterie.nbTickets }} ticket(s), pour le {{ billetterie.dateReservation|date('d/m/Y') }}.</p>
+				<p>-> {{ billetterie.nbTicketNormal }} : Normal</p>
+				<p>-> {{ billetterie.nbTicketEnfant }} : Enfant</p>
+				<p>-> {{ billetterie.nbTicketSenior }} : Senior</p>
+				<p>-> {{ billetterie.nbTicketReduit }} : Reduit.</p>
+				<br />
+				<p>Pour un montant total de : {{ billetterie.montant }} €.</p>
+			</div>
 		</div>
 		
 		<hr>
@@ -50,25 +53,48 @@
 		
 		<div class="container col-md-12">
 			<div class="row">
+				<div>
+					{{ form_label(form.visiteurs) }}
+					{{ form_errors(form.visiteurs) }}	
+				</div>
+				<div>
+					{{ form_widget(form.visiteurs) }}
+				</div>
+			</div>
+		
+			<br />
+			
 
-				{{ form_row(form.visiteurs) }}	
+			<hr>
+
+			<span id="messageErrorDate"></span>
+
+			<div class="row">
 				
+				<a href="{{ path('jv_core_delete', {'id': billetterie.id}) }}" class="btn btn-warning pull-left">
+					<i class="glyphicon glyphicon-trash"></i>
+					Abandonner la commande
+				</a>
+			
+				{{ form_widget(form.validation, { 'label': 'Suivant 3/4  >>>', 'attr' : {'class':'btn btn-info pull-right'}}) }}
+		
 			</div>
 		</div>
-		<br />
-		<button id="tester_date" class="btn btn-success">Enregistrer</button>
-		
-		<hr>
-		
-		<span id="messageErrorDate"></span>
-				
-		{{ form_widget(form.validation, {'attr' : {'class':'btn btn-info pull-right'}}) }}
 
 		{{ form_end(form) }}
+		
+		<!--<button id="tester_date" class="btn btn-success">Enregistrer</button>-->
 		
 	</div>
 		
 		
 
+{% endblock %}
+
+{% block script %}
+	<script>
+		
+
+	</script>
 {% endblock %}
 

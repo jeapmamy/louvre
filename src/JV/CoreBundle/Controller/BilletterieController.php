@@ -50,8 +50,11 @@ class BilletterieController extends Controller
 				$nbBdd = $compteur->getNombre();
 				$nbTotal = $nbResa+$nbBdd;
 				if ($nbTotal > 1000) {
+					
+					$request->getSession()->getFlashBag()->add('visite', 'Le nombre maximal de visiteurs, pour cette journée, a été atteint.');
+					$request->getSession()->getFlashBag()->add('visite', 'Nous vous invitons à choisir une autre date.');
+					
 					return $this->render('JVCoreBundle:Billetterie:reservation.html.twig', array(
-					  	'billetterie' => $billetterie,
 						'form' => $form->createView(),
 					));
 				}
@@ -163,7 +166,7 @@ class BilletterieController extends Controller
 		
 	}
 	
-	public function checkoutAction($id, Request $request, \Swift_Mailer $mailer)
+	public function checkoutAction($id, Request $request)
     {
         $billetterie = $this->getDoctrine()
   			->getManager()
@@ -183,46 +186,106 @@ class BilletterieController extends Controller
         // Create a charge: this will charge the user's card
         try {
             $charge = \Stripe\Charge::create(array(
-                "amount" => $billetterie->getMontant()*100, // Amount in cents
+                "amount" => $billetterie->getMontant()*100, 
                 "currency" => "eur",
                 "source" => $token,
                 "description" => "Paiement Stripe - Musée du Louvre"
             ));
-            $this->addFlash("success","Bravo ça marche !");
+            $this->addFlash("success","Paiement accepté !");
 			
 			// Envoi d'un email
 			$email = $billetterie->getEmail();
-			$message = (new \Swift_Message('Hello Email'))
+		
+			$message = (new \Swift_Message())
 				->setSubject('Confirmation de votre commande')
-				->setFrom('contact@louvre.fr')
+				->setFrom(['contact@louvre.fr' => 'Musée du Louvre'])
 				->setTo($email)
-				->setBody(
-					$this->renderView(
-						'JVCoreBundle:Billetterie:mail.html.twig', array(
-							'billetterie' => $billetterie,)
+				->setBody($this->renderView(
+					'Emails/mail.html.twig', array(
+						'billetterie' => $billetterie,)
 					),
 					'text/html'
 				)
 			;
 
-			$mailer->send($message);
+			$this->get('mailer')->send($message);
+
+			$request->getSession()->getFlashBag()->add('success', 'Votre commande a été validée avec succes.');
+			$request->getSession()->getFlashBag()->add('success', 'Une confirmation par email vient de vous être envoyée.');
 		
-            return $this->redirectToRoute("jv_corebundle_confirmation", array('id'=>$billetterie->getId()));
+            return $this->redirectToRoute("jv_core_confirmation", array('id'=>$billetterie->getId()));
 			
 			
         } catch(\Stripe\Error\Card $e) {
 
-            $this->addFlash("error","Snif ça marche pas :(");
-            return $this->redirectToRoute("jv_corebundle_paiement", array('id'=>$billetterie->getId()));
+            $this->addFlash("error","Paiement refusé !");
+			$request->getSession()->getFlashBag()->add('error', 'Veuillez renouveler votre demande en vous rendant sur la page "Accueil" du site.');
+            return $this->redirectToRoute("jv_core_paiement", array('id'=>$billetterie->getId()));
             // The card has been declined
         }
     }
 	
 
   	public function confirmationAction($id, Request $request)
-	{
-		$session = $request->getSession();
+	{	
+		$billetterie = $this->getDoctrine()
+  			->getManager()
+  			->getRepository('JVCoreBundle:Billetterie')
+  			->find($id)
+		;
 		
+		if (null === $billetterie) {
+			throw new NotFoundHttpException("La réservation d'id ".$id." n'existe pas.");
+		}
+		
+		return $this->render('JVCoreBundle:Billetterie:confirmation.html.twig', array(
+			'billetterie' => $billetterie,
+			//'form' => $form->createView(),
+		));
+	}
+	
+	public function deleteAction($id, Request $request)
+	{
+		$billetterie = $this->getDoctrine()
+  			->getManager()
+  			->getRepository('JVCoreBundle:Billetterie')
+  			->find($id)
+		;
+		
+		if (null === $billetterie) {
+			throw new NotFoundHttpException("La réservation d'id ".$id." n'existe pas.");
+		}
+		
+		// Suppression des places non confirmées du compteur...
+		$compteur = $this
+			->getDoctrine()
+			->getManager()
+			->getRepository('JVCoreBundle:Compteur')
+			->findOneByDate($billetterie->getDateReservation())
+		;
+		
+		$nbResa = $billetterie->getNbTickets();
+		$nbBdd = $compteur->getNombre();
+		$nbTotal = $nbBdd-$nbResa;
+		
+		$compteur->setNombre($nbTotal);
+		
+
+		//$form = $this->createForm(BilletterieType::class, $billetterie);
+		
+		//if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+		$em = $this->getDoctrine()->getManager();
+		$em->persist($compteur);
+		$em->remove($billetterie);
+		$em->flush();
+		
+		$request->getSession()->getFlashBag()->add('info', "La commande a bien été supprimée.");
+		
+		return $this->redirectToRoute('jv_core_home');
+	}
+	
+	public function essai($id, Request $request)
+	{	
 		$billetterie = $this->getDoctrine()
   			->getManager()
   			->getRepository('JVCoreBundle:Billetterie')
@@ -235,7 +298,7 @@ class BilletterieController extends Controller
 		
 		$email = $billetterie->getEmail();
 		
-		$message = \Swift_Message::newInstance()
+		$message = (new \Swift_Message())
 			->setSubject('Confirmation de votre commande')
 			->setFrom(['contact@louvre.fr' => 'Musée du Louvre'])
 			->setTo($email)
@@ -249,7 +312,7 @@ class BilletterieController extends Controller
 		
 		$this->get('mailer')->send($message);
 		
-		$session->getFlashBag()->add('success', 'Votre commande est validée avec succes');
+		$request->getSession()->getFlashBag()->add('success', 'Votre commande a été validée avec succes');
 		
 		return $this->redirectToRoute('jv_core_coordonnees', array('id'=>$billetterie->getId()));
 	}

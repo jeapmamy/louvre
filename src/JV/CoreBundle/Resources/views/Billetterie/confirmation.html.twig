@@ -10,11 +10,28 @@
 
   	<h3>Confirmation</h3>
 
-  	<p>
-	Ici la confirmation de la bonne validation de la commande et l'envoi de l'email
-		
-  	</p>
-  	
-  	
+	<div>
+		{% for style, message in app.session.flashbag.get('success') %}
+			{%if style == 'success'%} {% set type = 'success' %} {%endif%}
+        		<div class="alert alert-{{ type }}">
+					<p>{{ message }}</p>
+        		</div>
+		{% endfor %}
+	</div>
 
+	<div>
+		{% for style, message in app.session.flashbag.get('error') %}
+			{%if style == 'error'%} {% set type = 'danger' %} {%endif%}
+        		<div class="alert alert-{{ type }}">
+					<p><strong>Attention : </strong>{{ message }}</p>
+        		</div>
+		{% endfor %}
+	</div>
+
+{% endblock %}
+
+{% block script %}
+	<script>
+
+	</script>
 {% endblock %}
