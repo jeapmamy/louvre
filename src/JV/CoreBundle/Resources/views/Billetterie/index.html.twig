@@ -1,49 +1,62 @@
 {# src/JV/CoreBundle/Resources/views/Billetterie/index.html.twig #} 
 
-{% extends "JVCoreBundle::layout.html.twig" %} 
+{% extends "::layout.html.twig" %} 
 
 {% block title %} 
 	{{ parent() }} - Accueil 
 {% endblock %} 
 
-{% block jvcore_body %}
+{% block body %}
 
-<h3>Informations</h3>
+<div class="row">
+	<div class="col-md-2">
+		<h3>Les étapes</h3>
+		<ul class="nav nav-pills nav-stacked">
+			<li><a href="#" id="menuReservation">1 - Réservation</a></li>
+			<li><a href="#" id="menuCoordonnees">2 - Coordonnées</a></li>
+			<li><a href="#" id="menuPaiement">3 - Paiement</a></li>
+			<li><a href="#" id="menuConfirmation">4 - Confirmation</a></li>
+		</ul>
+	</div>
+	<div id="content" class="col-md-offset-1 col-md-9">
 
-<div>
-	{% for style, message in app.session.flashbag.get('info') %}
-		{%if style == 'info'%} {% set type = 'info' %} {%endif%}
-			<div class="alert alert-{{ type }}">
-				<p><strong>Information : </strong>{{ message }}</p>
-			</div>
-	{% endfor %}
+		<h3>Informations</h3>
+
+		<div>
+			{% for style, message in app.session.flashbag.get('info') %}
+				{%if style == 'info'%} {% set type = 'info' %} {%endif%}
+					<div class="alert alert-{{ type }}">
+						<p><strong>Information : </strong>{{ message }}</p>
+					</div>
+			{% endfor %}
+		</div>
+
+		<div class="intro">
+			<p>
+				Le musée du Louvre est ouvert tous les jours, sauf les mardis et les 1 er janvier, 1 er mai et 25 décembre. Il est possible de réserver des billets pour la journée ou la demi-journée. On peut commander un billet pour le jour même mais on ne peut plus commander de billet "journée" une fois 14h00 passées.
+			</p>
+			<p>
+				Le musée propose plusieurs tarifs : normal (à partir de 12 ans), enfant (de 4 ans à 12 ans, entrée gratuite pour les enfants de moins de 4 ans), senior (à partir de 60 ans) et réduit (étudiant, militaire...). Le billet acheté en ligne est nominatif, un document d’identité peut être demandé.
+			</p>
+			<p>
+				Pour mener, à son terme, votre réservation, vous devez avoir :
+			</p>
+			<ul>
+				<li>une adresse mail valide</li>
+				<li>le(s) nom(s), prénom(s), date(s) de naissance de(s) personne(s) concernée(s)</li>
+				<li>une carte bleue en cours de validité</li>
+			</ul>
+			<p>
+			Après acceptation de votre commande, vos billets vous seront envoyés par mail.
+			</p>
+			<br />
+			<p>
+				<a href="{{ path('jv_core_reservation') }}" class="btn btn-info pull-right">
+					 Suivant 1/4 <i class="glyphicon glyphicon-chevron-right"></i>
+				</a>
+			</p>
+		</div>
+	</div>
 </div>
-
-<div class="intro">
-	<p>
-		Le musée du Louvre est ouvert tous les jours, sauf les mardis et les 1 er janvier, 1 er mai et 25 décembre. Il est possible de réserver des billets pour la journée ou la demi-journée. On peut commander un billet pour le jour même mais on ne peut plus commander de billet "journée" une fois 14h00 passées.
-	</p>
-	<p>
-		Le musée propose plusieurs tarifs : normal (à partir de 12 ans), enfant (de 4 ans à 12 ans, entrée gratuite pour les enfants de moins de 4 ans), senior (à partir de 60 ans) et réduit (étudiant, militaire...). Le billet acheté en ligne est nominatif, un document d’identité peut être demandé.
-	</p>
-	<p>
-		Pour mener, à son terme, votre réservation, vous devez avoir :
-	</p>
-	<ul>
-		<li>une adresse mail valide</li>
-		<li>le(s) nom(s), prénom(s), date(s) de naissance de(s) personne(s) concernée(s)</li>
-		<li>une carte bleue en cours de validité</li>
-	</ul>
-	<p>
-	Après acceptation de votre commande, vos billets vous seront envoyés par mail.
-	</p>
-	<br />
-	<p>
-		<a href="{{ path('jv_core_reservation') }}" class="btn btn-info pull-right">
-			 Suivant 1/4 <i class="glyphicon glyphicon-chevron-right"></i>
-		</a>
-	</p>
-</div>
-
 
 {% endblock %}

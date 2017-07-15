@@ -1,63 +1,75 @@
 {# src/JV/CoreBundle/Resources/views/Billetterie/paiement.html.twig #}
 
-{% extends "JVCoreBundle::layout.html.twig" %}
+{% extends "::layout.html.twig" %}
 
 {% block title %}
   {{ parent() }} - Paiement
 {% endblock %}
 
-{% block jvcore_body %}
+{% block body %}
 
-  	<h3>Paiement</h3>
+<div class="row">
+	<div class="col-md-2">
+		<h3>Les étapes</h3>
+		<ul class="nav nav-pills nav-stacked">
+			<li><a href="#" class="menuCorps">1 - Réservation <i class="glyphicon glyphicon-ok"></i></a></li>
+			<li><a href="#" class="menuCorps">2 - Coordonnées <i class="glyphicon glyphicon-ok"></i></a></li>
+			<li><a href="#" class="menuCorps">3 - Paiement</a></li>
+			<li><a href="#">4 - Confirmation</a></li>
+		</ul>
+	</div>
+	<div id="content" class="col-md-offset-1 col-md-9">
 
-  	<div id="wrapper">
-        <div id="container">
-			<div class="welcome">
-				<div class ="recapCommandeTitre">
-					<h4>Vous êtes sur le point de payer votre commande :</h4>
+		<h3>Paiement</h3>
+
+		<div id="wrapper">
+			<div id="container">
+				<div class="welcome">
+					<div class ="recapCommandeTitre">
+						<h4>Vous êtes sur le point de payer votre commande :</h4>
+					</div>
+					<div class = "recapCommandeCorps">
+						<p>
+							{{ billetterie.nbTickets }} Ticket(s)<br /><br />
+							<strong>{{ billetterie.montant }} €</strong>
+						</p>
+					</div>
 				</div>
-				<div class = "recapCommandeCorps">
+
+				<div id="status">
 					<p>
-						{{ billetterie.nbTickets }} Ticket(s)<br /><br />
-						<strong>{{ billetterie.montant }} €</strong>
+						<!--Vous êtes sur le point de payer votre commande.-->
 					</p>
+					<form action="{{ path('jv_core_checkout', {'id': billetterie.id}) }}" method="POST">
+						<script
+								src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+								data-key="pk_test_AcMEBvAm1KZKkWRVxFLlHdmA"
+								data-amount="{{ billetterie.montant*100 }}"
+								data-name="Musée du Louvre"
+								data-description="Paiement CB"
+								data-locale="auto"
+								data-email="{{ billetterie.email }}"
+								data-label="Paiement CB"
+								data-image="http://localhost/louvre/web/bundles/image/logo.jpg"
+								data-currency="eur">
+						</script>
+					</form>
 				</div>
-			</div>
-
-			<div id="status">
-				<p>
-					<!--Vous êtes sur le point de payer votre commande.-->
-				</p>
-				<form action="{{ path('jv_core_checkout', {'id': billetterie.id}) }}" method="POST">
-					<script
-							src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-							data-key="pk_test_AcMEBvAm1KZKkWRVxFLlHdmA"
-							data-amount="{{ billetterie.montant*100 }}"
-							data-name="Musée du Louvre"
-							data-description="Paiement CB"
-							data-locale="auto"
-							data-email="{{ billetterie.email }}"
-							data-label="Paiement CB"
-							data-image="http://localhost/louvre/web/bundles/image/logo.jpg"
-							data-currency="eur">
-					</script>
-				</form>
 			</div>
 		</div>
-    </div>
 
-	<br />	
+		<br />	
 
-	<hr>
+		<hr>
 
-	<div>		
-		<a href="{{ path('jv_core_delete', {'id': billetterie.id}) }}" class="btn btn-warning pull-left">
-			<i class="glyphicon glyphicon-trash"></i>
-			Abandonner la commande
-		</a>
+		<div>		
+			<a href="{{ path('jv_core_delete', {'id': billetterie.id}) }}" class="btn btn-warning pull-left">
+				<i class="glyphicon glyphicon-trash"></i>
+				Abandonner la commande
+			</a>
+		</div>
 	</div>
-  	
-  	
+</div> 	
 
 {% endblock %}
 

@@ -1,93 +1,105 @@
 {# src/JV/CoreBundle/Resources/views/Billetterie/coordonnees.html.twig #}
 
-{% extends "JVCoreBundle::layout.html.twig" %}
+{% extends "::layout.html.twig" %}
 
 {% block title %}
   {{ parent() }} - Coordonnées
 {% endblock %}
 
-{% block jvcore_body %}
+{% block body %}
 
-  	<h3>Coordonnées</h3>
+<div class="row">
+	<div class="col-md-2">
+		<h3>Les étapes</h3>
+		<ul class="nav nav-pills nav-stacked">
+			<li><a href="#" class="menuCorps">1 - Réservation <i class="glyphicon glyphicon-ok"></i></a></li>
+			<li><a href="#" class="menuCorps">2 - Coordonnées</a></li>
+			<li><a href="#">3 - Paiement</a></li>
+			<li><a href="#">4 - Confirmation</a></li>
+		</ul>
+	</div>
+	<div id="content" class="col-md-offset-1 col-md-9">
 
-	
-	<div>
-		
-		{{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
-		{{ form_errors(form) }}
-		
-		<div class ="recapFormCommande">
-		
-			{{ form_row(form.dateReservation) }}
-			{{ form_row(form.journee) }}
-			{{ form_row(form.nbTicketNormal) }}
-			{{ form_row(form.nbTicketNormal) }}
-			{{ form_row(form.nbTicketEnfant) }}
-			{{ form_row(form.nbTicketSenior) }}
-			{{ form_row(form.nbTicketReduit) }}
-			{{ form_row(form.nbTickets) }}
-			{{ form_row(form.montant) }}
-			{{ form_row(form.email) }}
+		<h3>Coordonnées</h3>
 
-		</div>
-		
-		<div class="welcome">
-			<div class ="recapCommandeTitre">
-				<h4>Récapitulatif de votre commande :</h4>
+
+		<div>
+
+			{{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
+			{{ form_errors(form) }}
+
+			<div class ="recapFormCommande">
+
+				{{ form_row(form.dateReservation) }}
+				{{ form_row(form.journee) }}
+				{{ form_row(form.nbTicketNormal) }}
+				{{ form_row(form.nbTicketNormal) }}
+				{{ form_row(form.nbTicketEnfant) }}
+				{{ form_row(form.nbTicketSenior) }}
+				{{ form_row(form.nbTicketReduit) }}
+				{{ form_row(form.nbTickets) }}
+				{{ form_row(form.montant) }}
+				{{ form_row(form.email) }}
+
 			</div>
-			<div class = "recapCommandeCorps">
-				<p>Votre réservation comprend,</p>
-				<p>{{ billetterie.nbTickets }} ticket(s), pour le {{ billetterie.dateReservation|date('d/m/Y') }}.</p>
-				<p>-> {{ billetterie.nbTicketNormal }} : Normal</p>
-				<p>-> {{ billetterie.nbTicketEnfant }} : Enfant</p>
-				<p>-> {{ billetterie.nbTicketSenior }} : Senior</p>
-				<p>-> {{ billetterie.nbTicketReduit }} : Reduit.</p>
-				<br />
-				<p>Pour un montant total de : {{ billetterie.montant }} €.</p>
-			</div>
-		</div>
-		
-		<hr>
-		
-		<button id="ajouter_visiteur" class="btn btn-info">Saisir les coordonnées</button>
-		
-		<div class="container col-md-12">
-			<div class="row">
-				<div>
-					{{ form_label(form.visiteurs) }}
-					{{ form_errors(form.visiteurs) }}	
+
+			<div class="welcome">
+				<div class ="recapCommandeTitre">
+					<h4>Récapitulatif de votre commande :</h4>
 				</div>
-				<div>
-					{{ form_widget(form.visiteurs) }}
+				<div class = "recapCommandeCorps">
+					<p>Votre réservation comprend,</p>
+					<p>{{ billetterie.nbTickets }} ticket(s), pour le {{ billetterie.dateReservation|date('d/m/Y') }}.</p>
+					<p>-> {{ billetterie.nbTicketNormal }} : Normal</p>
+					<p>-> {{ billetterie.nbTicketEnfant }} : Enfant</p>
+					<p>-> {{ billetterie.nbTicketSenior }} : Senior</p>
+					<p>-> {{ billetterie.nbTicketReduit }} : Reduit.</p>
+					<br />
+					<p>Pour un montant total de : {{ billetterie.montant }} €.</p>
 				</div>
 			</div>
-		
-			<br />
-			
 
 			<hr>
 
-			<span id="messageErrorDate"></span>
+			<button id="ajouter_visiteur" class="btn btn-info">Saisir les coordonnées</button>
 
-			<div class="row">
-				
-				<a href="{{ path('jv_core_delete', {'id': billetterie.id}) }}" class="btn btn-warning pull-left">
-					<i class="glyphicon glyphicon-trash"></i>
-					Abandonner la commande
-				</a>
-			
-				{{ form_widget(form.validation, { 'label': 'Suivant 3/4  >>>', 'attr' : {'class':'btn btn-info pull-right'}}) }}
-		
+			<div class="container col-md-12">
+				<div class="row">
+					<div>
+						{{ form_label(form.visiteurs) }}
+						{{ form_errors(form.visiteurs) }}	
+					</div>
+					<div>
+						{{ form_widget(form.visiteurs) }}
+					</div>
+				</div>
+
+				<br />
+
+
+				<hr>
+
+				<span id="messageErrorDate"></span>
+
+				<div class="row">
+
+					<a href="{{ path('jv_core_delete', {'id': billetterie.id}) }}" class="btn btn-warning pull-left">
+						<i class="glyphicon glyphicon-trash"></i>
+						Abandonner la commande
+					</a>
+
+					{{ form_widget(form.validation, { 'label': 'Suivant 3/4  >>>', 'attr' : {'class':'btn btn-info pull-right'}}) }}
+
+				</div>
 			</div>
-		</div>
 
-		{{ form_end(form) }}
-		
-		<!--<button id="tester_date" class="btn btn-success">Enregistrer</button>-->
-		
+			{{ form_end(form) }}
+
+			<!--<button id="tester_date" class="btn btn-success">Enregistrer</button>-->
+
+		</div>
 	</div>
-		
-		
+</div>		
 
 {% endblock %}
 
