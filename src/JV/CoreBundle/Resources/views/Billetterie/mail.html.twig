@@ -24,22 +24,23 @@
 			
 		</div>
 		
-		<hr>
+		<br />
 		
 		<div>
 			<p>Visiteur(s) :</p>
-			
+			<hr>
 			{% for visiteur in billetterie.visiteurs %}
-				<p> 
-					N° {{ loop.index }} : {{ visiteur.nom }}, {{ visiteur.prenom }} - Tarif : {{ visiteur.ticket }} - Prix : {{ visiteur.prix }}
-				</p> 
-				<hr>
+			<p> 
+				N° {{ loop.index }} : {{ visiteur.nom }}, {{ visiteur.prenom }} - Tarif : {{ visiteur.ticket }} - Prix : {{ visiteur.prix }} €
+			</p> 
+			<hr>
 			{% endfor %}
 			
 		</div>
-		
+		<br />
 		<div>
 			<p><strong>IMPORTANT : </strong>Conservez ce mail, il vous sera demandé à l'entrée du musée.</p>
+			<br />
 			<p>
 				Chaque visiteur doit être en mesure de présenter lors de sa venue :
 			</p>
@@ -50,7 +51,7 @@
 			<p>
 			
 		</div>
-		
+		<br />
 		<div>
 			<p>Nous vous remercions de votre commande et nous vous souhaitons, par avance, une excellent visite.</p>
 			<p>L'équipe du Musée du Louvre</p>

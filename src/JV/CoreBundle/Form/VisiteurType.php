@@ -20,7 +20,7 @@ class VisiteurType extends AbstractType
     {
         $builder
 			->add('nom',			TextType::class, array(
-				'label' => 'Nom : ',			
+				'label' => 'Nom : ',
 				)
 			)
 			->add('prenom',			TextType::class, array(
@@ -47,7 +47,7 @@ class VisiteurType extends AbstractType
 				)
 			)
 			->add('prix',			IntegerType::class, array(
-				'label' => 'Prix : ',	
+				'label' => 'Prix : ',
 				'attr' => array(
 					'readonly' => true,)
 				)

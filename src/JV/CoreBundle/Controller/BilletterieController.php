@@ -104,6 +104,7 @@ class BilletterieController extends Controller
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 			
 			// On enregistre notre objet $visiteur dans la base de données
+			
 			$em = $this->getDoctrine()->getManager();
 			//$visiteur->setBilletterie($billetterie);
 			$em->persist($billetterie);

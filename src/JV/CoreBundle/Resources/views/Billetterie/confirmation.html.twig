@@ -10,12 +10,12 @@
 
 <div class="row">
 	<div class="col-md-2">
-		<h3>Les étapes</h3>
+		<h3 class="etapes">Les étapes</h3>
 		<ul class="nav nav-pills nav-stacked">
-			<li><a href="#" class="menuCorps">1 - Réservation <i class="glyphicon glyphicon-ok pull-right"></i></a></li>
-			<li><a href="#" class="menuCorps">2 - Coordonnées <i class="glyphicon glyphicon-ok pull-right"></i></a></li>
-			<li><a href="#" class="menuCorps">3 - Paiement <i class="glyphicon glyphicon-ok pull-right"></i></a></li>
-			<li><a href="#" class="menuCorps">4 - Confirmation <i class="glyphicon glyphicon-ok pull-right"></i></a></li>
+			<li><a href="#" id="menuConfResa">1 - Réservation <i class="glyphicon glyphicon-ok pull-right"></i></a></li>
+			<li><a href="#" id="menuConfCoord">2 - Coordonnées <i class="glyphicon glyphicon-ok pull-right"></i></a></li>
+			<li><a href="#" id="menuConfPaie">3 - Paiement <i class="glyphicon glyphicon-ok pull-right"></i></a></li>
+			<li><a href="#" id="menuConfPaie">4 - Confirmation <i class="glyphicon glyphicon-ok pull-right"></i></a></li>
 		</ul>
 	</div>
 	<div id="content" class="col-md-offset-1 col-md-9">
@@ -29,6 +29,10 @@
 						<p>{{ message }}</p>
 					</div>
 			{% endfor %}
+		</div>
+		
+		<div>
+			{{ include("JVCoreBundle:Billetterie:mail.html.twig") }}
 		</div>
 
 		<div>
