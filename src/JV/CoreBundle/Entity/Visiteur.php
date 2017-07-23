@@ -26,8 +26,7 @@ class Visiteur
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
-	 * @Assert\NotBlank(message="Le nom est obligatoire")
-	 * @Assert\Length(min=2)
+	 * @Assert\NotBlank()
 	 *
      */
     private $nom;
@@ -36,8 +35,7 @@ class Visiteur
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=255)
-	 * @Assert\NotBlank(message="Le prenom est obligatoire")
-	 * @Assert\Length(min=2)
+	 * @Assert\NotBlank()
 	 *
      */
     private $prenom;
@@ -46,8 +44,7 @@ class Visiteur
      * @var string
      *
      * @ORM\Column(name="pays", type="string", length=255)
-	 * @Assert\NotBlank(message="Le pays est obligatoire")
-	 * @Assert\Length(min=2)
+	 * @Assert\NotBlank()
 	 *
      */
     private $pays;

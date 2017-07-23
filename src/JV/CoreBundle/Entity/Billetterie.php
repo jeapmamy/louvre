@@ -424,7 +424,7 @@ class Billetterie
     public function creationCodeReservation()
     {
 		$codeReservation = "";
-		$chaine = "abcdefghijklmnopqrstuvwxyzAZERTYUIOPQSDFGHJKLMWXCVBN123456789";
+		$chaine = "abcdefghijklmnopqrstuvwxyz123456789AZERTYUIOPQSDFGHJKLMWXCVBN123456789";
 		for ($i = 0; $i < 10; $i++) {
 			$codeReservation .= $chaine[rand() % strlen($chaine)];
 		}
