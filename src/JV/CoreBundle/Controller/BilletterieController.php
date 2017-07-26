@@ -63,7 +63,6 @@ class BilletterieController extends Controller
 				}
 			}
 			
-			//$billetterie->setCodeReservation('ESSAI0000');
 			// On enregistre notre objet $billetterie dans la base de données
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($compteur);
@@ -76,8 +75,6 @@ class BilletterieController extends Controller
 			
 		}
 					
-		
-		
 		// À ce stade, le formulaire n'est pas valide car :
 		// - Soit la requête est de type GET, donc le visiteur vient d'arriver sur la page et veut voir le formulaire
 		// - Soit la requête est de type POST, mais le formulaire contient des valeurs invalides, donc on l'affiche de nouveau
@@ -106,18 +103,15 @@ class BilletterieController extends Controller
 			// On enregistre notre objet $visiteur dans la base de données
 			
 			$em = $this->getDoctrine()->getManager();
-			//$visiteur->setBilletterie($billetterie);
 			$em->persist($billetterie);
 			$em->flush();
 
 
 			// Puis on redirige vers la page suivante
-			return $this->redirectToRoute('jv_core_paiement', array('id'=>$billetterie->getId()));
-			
+			return $this->redirectToRoute('jv_core_paiement', array('id'=>$billetterie->getId()));	
 			
 		}
 			
-		
 		return $this->render('JVCoreBundle:Billetterie:coordonnees.html.twig', array(
 			'billetterie' => $billetterie,
 			'form' => $form->createView(),
@@ -125,12 +119,6 @@ class BilletterieController extends Controller
 
 	}
 	
-/*
-    public function recapitulatifAction()
-	{
-		return $this->render('JVCoreBundle:Billetterie:recapitulatif.html.twig');
-	}
-*/
   	public function paiementAction($id, Request $request)
 	{
 		$billetterie = $this->getDoctrine()
@@ -142,24 +130,7 @@ class BilletterieController extends Controller
 		if (null === $billetterie) {
 			throw new NotFoundHttpException("La réservation d'id ".$id." n'existe pas.");
 		}
-/*
-		$form = $this->createForm(BilletterieType::class, $billetterie);
-		
-		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-			
-			// On enregistre notre objet $visiteur dans la base de données
-			$em = $this->getDoctrine()->getManager();
-			//$visiteur->setBilletterie($billetterie);
-			$em->persist($billetterie);
-			$em->flush();
 
-
-			// Puis on redirige vers la page suivante
-			return $this->redirectToRoute('jv_core_paiement', array('id'=>$billetterie->getId()));
-			
-		}
-		
-*/
 		return $this->render('JVCoreBundle:Billetterie:paiement.html.twig', array(
 			'billetterie' => $billetterie,
 			//'form' => $form->createView(),
@@ -271,10 +242,6 @@ class BilletterieController extends Controller
 		
 		$compteur->setNombre($nbTotal);
 		
-
-		//$form = $this->createForm(BilletterieType::class, $billetterie);
-		
-		//if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($compteur);
 		$em->remove($billetterie);
@@ -285,38 +252,7 @@ class BilletterieController extends Controller
 		return $this->redirectToRoute('jv_core_home');
 	}
 	
-	public function essai($id, Request $request)
-	{	
-		$billetterie = $this->getDoctrine()
-  			->getManager()
-  			->getRepository('JVCoreBundle:Billetterie')
-  			->find($id)
-		;
-		
-		if (null === $billetterie) {
-			throw new NotFoundHttpException("La réservation d'id ".$id." n'existe pas.");
-		}
-		
-		$email = $billetterie->getEmail();
-		
-		$message = (new \Swift_Message())
-			->setSubject('Confirmation de votre commande')
-			->setFrom(['contact@louvre.fr' => 'Musée du Louvre'])
-			->setTo($email)
-			->setBody($this->renderView(
-				'Emails/mail.html.twig', array(
-					'billetterie' => $billetterie,)
-				),
-				'text/html'
-			)
-		;
-		
-		$this->get('mailer')->send($message);
-		
-		$request->getSession()->getFlashBag()->add('success', 'Votre commande a été validée avec succes');
-		
-		return $this->redirectToRoute('jv_core_coordonnees', array('id'=>$billetterie->getId()));
-	}
+	
 }
 
 
